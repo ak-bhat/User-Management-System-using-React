@@ -26,7 +26,7 @@ const loginAdmin = async (req,res) =>{
 }
 
 //Admin side - add New User
-const addNewUser = async (req, res, next) => {
+const addNewUser = async (req, res) => {
     try {
         const {username, email, password, confirmPassword} = req.body;
 
@@ -52,7 +52,7 @@ const addNewUser = async (req, res, next) => {
 
 
 //Admin- Update User
-const updateExistingUser = async (req, res, next) => {
+const updateExistingUser = async (req, res) => {
     try {
 
         const userId = req.params.id;
@@ -73,7 +73,7 @@ const updateExistingUser = async (req, res, next) => {
 }
 
 // Delete existing user
-const deleteExitingUser = async (req, res, next) =>{
+const deleteExitingUser = async (req, res) =>{
     try {
         const userId = req.params.id;
         const resp = await User.deleteOne({_id:userId});
@@ -88,10 +88,39 @@ const deleteExitingUser = async (req, res, next) =>{
     }
 }
 
+// Admin - Get all users
+const getAllUsers = async (req, res) => {
+    try {
+
+        const allUsers = await User.find({});
+        return res.status(200).json({success:true, message:"Data fetched", data:{users:allUsers}})
+
+    } catch (error) {
+        return res.status(500).json({success:false, status_code:400,message:"Unable to fetch", data:{} })
+    }
+}
+
+//Admin - Get single user data
+const getSingleUser = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const user = await User.findOne({_id:userId});
+        if (!user) {
+            throw new Error("User Not found");
+        } else {
+            return res.status(200).json({success:true, message:"Data fetched", data:{user: user}})
+        }
+    } catch (error) {
+        return res.status(500).json({success:false, status_code:400,message:"Unable to fetch", data:{} })
+    }
+}
+
 
 module.exports = {
     loginAdmin,
     addNewUser,
     updateExistingUser,
-    deleteExitingUser
+    deleteExitingUser,
+    getAllUsers,
+    getSingleUser
 }
