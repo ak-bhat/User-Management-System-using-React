@@ -15,8 +15,8 @@ const adminAuthMiddleware = (req, res, next)=>{
     } catch (error) {
         return res.status(401).json({success:false, message:error.message, error_code:404, data:{}})
     }
+}
 
-    module.exports = {
-        adminAuthMiddleware
-    }
+module.exports = {
+    adminAuthMiddleware
 }
