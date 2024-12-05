@@ -11,7 +11,7 @@ const AdminLogin = () => {
     const navigate = useNavigate();
 
     const onSubmit = (data) => {
-        fetch(process.env.BACKEND_ADMIN_BASE_URL + '/login', {
+        fetch('http://localhost:5000/api/admin/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -20,14 +20,14 @@ const AdminLogin = () => {
         })
         .then((resp) => resp.json())
         .then((json) => {
-            console.log(json);
+            console.log("json"+json.message);
             if (!json.success) setError(json.message);
             else {
                 dispatch(loginAdmin(json.data.token));
                 navigate('/admin');
             }
         })
-        .catch((err) => setError(err.message));
+        .catch((err) => setError("Token error"+err.message));
     };
 
     return (

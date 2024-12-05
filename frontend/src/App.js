@@ -1,10 +1,12 @@
-import AdminLogin from "./components/admin/AdminLogin";
+import { RouterProvider } from "react-router-dom";
+import useRoutes from "./hooks/useRoutes";
 
 
 function App() {
-  return (
-    <div>
-      <AdminLogin/>
+  const router = useRoutes();
+	return (
+    <div className="App">
+		<RouterProvider router={router} />
     </div>
   );
 }

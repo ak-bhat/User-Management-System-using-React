@@ -17,7 +17,7 @@ const registerUser = async (req,res) => {
             delete userObj.confirmPassword;
             let newUser = await userObj.save();    //Save new user to db
 
-            const accessToken = jwt.sign({username:newUser, userId:newUser._id}, process.eventNames.JWT_SECRET, {expiresIn:'15m'})  // Create access token for user
+            const accessToken = jwt.sign({username:newUser, userId:newUser._id}, process.env.JWT_SECRET, {expiresIn:'15m'})  // Create access token for user
             res.json({success:true, message:"User signup successfull", data:{username:newUser.username, userId: newUser._id, token:accessToken}})  //send success response on user login 
         }
     } catch (error) {
@@ -40,8 +40,8 @@ const loginUser = async (req,res) => {
                 throw new Error("Invalid Credentials");
                 
             } else {
-                const accessToken = jwt.sign({username:userDetails.username, userId:userDetails._id}, process.eventNames.JWT_SECRET, {expiresIn:'15m'})  // Create access token for user
-                res.json({success:true, message:"User signup successfull", data:{username:newUser.username, userId: newUser._id, token:accessToken}})  //send success response on user login 
+                const accessToken = jwt.sign({username:userDetails.username, userId:userDetails._id}, process.env.JWT_SECRET, {expiresIn:'15m'})  // Create access token for user
+                res.json({success:true, message:"User signup successfull", data:{username:userDetails.username, userId: userDetails._id, token:accessToken}})  //send success response on user login 
             }
         }
 
@@ -87,6 +87,7 @@ const uploadImage = async (req, res) => {
                 if(error){
                     throw new Error(error);
                 } else {
+                    console.log(result);
                     await User.updateOne({_id:req.userID}, {$set:{profile_pic:result.secure_url}});   // Update the user info with image url
                     return res.status(201).json({success:true, message:"Profile picture updated", data:{imageURL: result.secure_url} })
                 }

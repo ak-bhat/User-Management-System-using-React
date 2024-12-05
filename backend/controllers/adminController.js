@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 //Admin Login
 const loginAdmin = async (req,res) =>{
     try {
-
+        console.log("admin")
         if (req.body.email !== process.env.ADMIN_EMAIL) {
             throw new Error("Invalid Credentials");
         }
@@ -15,7 +15,7 @@ const loginAdmin = async (req,res) =>{
         if (!comparePassword) {
             throw new Error("Invalid Credentials");
         }else{
-            const accesToken = jwt.sign({email:req.body.email}, process.env.ADMIN_JWT_SECRET, {expiresIn:'10'})
+            const accesToken = jwt.sign({email:req.body.email}, process.env.ADMIN_JWT_SECRET, {expiresIn:'10h'})
             return res.json({success:true, message:"Admin LoggedIn Successfully", data:{token:accesToken}})
         }
         
