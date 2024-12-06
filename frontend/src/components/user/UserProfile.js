@@ -21,24 +21,27 @@ const UserProfile = () => {
     const [imageError, setImageError] = useState(null);
 
     const USER_DEFAULT_IMAGE = 'https://th.bing.com/th/id/OIP.wRBGXNn1WOjghttSJbyxKwHaHa?w=600&h=600&rs=1&pid=ImgDetMain';
-    const userToken = useSelector(store => store?.user?.userToken);
+    const userToken = useSelector(store => store.user.userToken);
+    const user1 = useSelector(store => store?.user);
     const userDP = useSelector(store => store?.user?.userProflePic) ?? USER_DEFAULT_IMAGE;
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    // console.log("token "+userToken);
+    
     // user profile pic upload form
     const { register, handleSubmit } = useForm();
     const onSubmit = async (data) => {
         try {
             if (!data.image[0]) {
                 console.log("No image found");
-                return;
+                throw new Error("No image Found");
             }
-            console.log('Form data:', data.image[0]);
+            // console.log('Form data:', data.image[0]);
             const base64Image = await fileToBase64(data.image[0]);
-            console.log(base64Image);
+            // console.log(base64Image);
 
-            const response = await fetch("http://localhost:3000/api/user/upload-profile_pic", {
+            const response = await fetch("http://localhost:5000/api/user/upload-profile_pic", {
                 method: 'POST',
                 body: JSON.stringify({ file: base64Image }),
                 headers: {
@@ -46,12 +49,14 @@ const UserProfile = () => {
                     authorization: `Bearer ${userToken}`,
                 },
             });
+            console.log("response "+ response.status);
+            
             if (response.status === 401) {
                 dispatch(logoutUser());
                 navigate('/auth/login');
             }
             const jsonData = await response.json();
-            console.log(jsonData);
+            console.log("json image"+jsonData.data.imageURL);
             if (!jsonData.success) {
                 setImageError(jsonData.message);
             } else {
@@ -92,9 +97,9 @@ const UserProfile = () => {
                                     />
                                 </div>
                                 <div className="ml-4">
-                                    <h5 className="text-xl font-semibold">{user?.username}</h5>
-                                    <p className="text-gray-600">{user?.email}</p>
-                                    <p className="text-gray-500">Joined on: {user?.createdAt}</p>
+                                    <h5 className="text-xl font-semibold">{user1?.username}</h5>
+                                    {/* <p className="text-gray-600">{user1?.email}</p>
+                                    <p className="text-gray-500">Joined on: {user1?.createdAt}</p> */}
                                 </div>
                             </div>
                         </div>

@@ -17,7 +17,7 @@ const AdminUpdateUser = () => {
     try {
       console.log("Submitted Data:", data);
       const response = await fetch(
-        `${process.env.BACKEND_ADMIN_BASE_URL}/update-user-details/${id}`,
+        `http://localhost:5000/api/admin/update-user-details/${id}`,
         {
           method: "POST",
           headers: {

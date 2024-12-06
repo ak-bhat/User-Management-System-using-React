@@ -15,6 +15,6 @@ router.post('/signup', registerUser);
 
 router.get('/get-user', userAuthMiddleware, getProfileDetails);
 
-router.post('/upload-propic', userAuthMiddleware, uploadImage);
+router.post('/upload-profile_pic', uploadImage);
 
 module.exports = router;

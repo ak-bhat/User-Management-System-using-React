@@ -30,6 +30,7 @@ const useLoginUser = () => {
         }else{
             dispatch(setUserProfilePic(jsonData?.data?.user?.profile_pic))
             setUser(jsonData.data.user)
+            
         }
     }
 

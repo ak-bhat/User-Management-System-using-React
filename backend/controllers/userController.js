@@ -57,6 +57,8 @@ const loginUser = async (req,res) => {
 const getProfileDetails = async (req, res) => {
     try {
         const userId = req.userId
+        console.log(userId);
+        
         const user = await User.findOne({_id:userId})
         return res.status(200).json({success:true, message:"User Data Fetched", data:{user}})
     } catch (error) {
@@ -69,7 +71,9 @@ const getProfileDetails = async (req, res) => {
 
 const uploadImage = async (req, res) => {
     try {
-        if(!req.body.file){
+        // console.log(req.body.file);
+        
+        if(!req.body){
             return res.status(204).json({success:false, error_code:204, message:"No file to upload", data:{}})
         }
 
@@ -81,13 +85,13 @@ const uploadImage = async (req, res) => {
             api_secret: process.env.CLOUDINARY_API_SECRET
         });
 
-        cloudinary.uploader.upload(req.bcrypt.file,
+        cloudinary.uploader.upload(req.body.file,
             {folder:"USER_MANAGEMENT"},   //Create folder in cloud
             async function(error, result) {
                 if(error){
                     throw new Error(error);
                 } else {
-                    console.log(result);
+                    // console.log(result);
                     await User.updateOne({_id:req.userID}, {$set:{profile_pic:result.secure_url}});   // Update the user info with image url
                     return res.status(201).json({success:true, message:"Profile picture updated", data:{imageURL: result.secure_url} })
                 }

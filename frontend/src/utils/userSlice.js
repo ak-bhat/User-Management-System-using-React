@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { useSelector } from 'react-redux'
 
 const userSlice = createSlice({
     name: "user",
@@ -27,6 +28,8 @@ const userSlice = createSlice({
             state.userID = null;
         },
         setUserProfilePic : (state, action) => {
+            // console.log(action.payload);
+            
             state.userProflePic = action.payload
         }
 }

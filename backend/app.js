@@ -10,12 +10,13 @@ const PORT = process.env.PORT || 5000;
 app.use(cors({ origin: 'http://localhost:3000' }));
 
 //Body Parser
-app.use(bodyParser.json())
+
 
 //Routes
 const userRouter = require('./routes/userRoutes');
 const adminRouter = require('./routes/adminRoutes');
 
+app.use(bodyParser.json())
 app.use('/api/user', userRouter);
 app.use('/api/admin', adminRouter);
 

@@ -13,7 +13,7 @@ const UserSignup = () => {
   const onSubmit = async (data) => {
     try {
       console.log(data);
-      const resp = await fetch('http://localhost:3000/api/user/signup', {
+      const resp = await fetch('http://localhost:5000/api/user/signup', {
         method: "POST",
         body: JSON.stringify(data),
         headers: {

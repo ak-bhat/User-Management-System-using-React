@@ -54,7 +54,7 @@ const useRoutes = () => {
         {/* user routes */}
         <Route path="/" element={<UserAuthRoot />}>
           <Route index element={USER ? <UserHomepage /> : <Navigate to={'/auth/login'} />} />
-          <Route path="profile" element={USER ? <UserProfile /> : <Navigate to={'/auth/login'} />} />
+          <Route path="/profile" element={USER ? <UserProfile /> : <Navigate to={'/auth/login'} />} />
         </Route>
         <Route path="/auth" element={<UserRoot />}>
           <Route path="login" element={!USER ? <UserLogin /> : <Navigate to={'/'} />} />

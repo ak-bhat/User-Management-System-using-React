@@ -15,13 +15,13 @@ const UserNavbar = () => {
   return (
     <>
       <div className="p-4 flex justify-between items-center bg-gray-200 sticky top-0 shadow-md">
-        <h3 className="text-lg font-semibold text-gray-700">❤️ Hai</h3>
+        <h3 className="text-lg font-semibold text-gray-700">❤️ Welcome</h3>
         <div className="flex space-x-4">
           <Link
             to="/profile"
             className="px-4 py-2 border-2 border-gray-400 rounded-lg hover:bg-gray-300 focus:outline-none"
           >
-            🐧 Profile
+            😎 Profile
           </Link>
           <button
             onClick={handleLogout}
